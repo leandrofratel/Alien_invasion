@@ -25,10 +25,10 @@ def run_game():
         # Observa eventos de teclado e de mouse.
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
-        bullets.update()
+        gf.update_bullets(bullets)
         gf.update_screen(ai_settings, screen, ship, bullets)
         
         # Deixa a tela mais recente visível.
         pygame.display.flip()
-
+ 
 run_game()
