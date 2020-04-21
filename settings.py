@@ -7,8 +7,13 @@ class Settings():
         #self.screen_width = 1520
         #self.screen_hight = 900
 
-        self.screen_width = 1200
-        self.screen_hight = 800
+        self.screen_width = 800
+        self.screen_hight = 600
+
+        #self.screen_width = 1200
+        #self.screen_hight = 900
+        
+        # Configurações de cor da tela
         self.bg_color = (100, 100, 100)
 
         # Configurações da espaçonave.
