@@ -31,7 +31,8 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         sleep(0.5)
         
     else:
-        stats.game_acrtive = False
+        stats.game_active = False
+        pygame.mouse.set_visible(True)
 
 def check_fleet_edges(ai_settings, aliens):
     """Responde se um alien alcançou a borda da tela."""
@@ -67,7 +68,7 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-def check_events(ai_settings, screen, ship, bullets):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """Responde a eventos de pressionamento de teclas e de mouse."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -78,8 +79,32 @@ def check_events(ai_settings, screen, ship, bullets):
 
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+        
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_settings, screen, stats, play_button, ship,
+                aliens, bullets, mouse_x, mouse_y)
 
-def update_screen(ai_settings, screen, ship, bullets, aliens):
+def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+    """O jogo é iniciado quando o jogado clicar no botão."""
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        # Reinicia os dados estatisticos do jogo.
+        stats.reset_stats()
+        stats.game_active = True
+
+        # Esvazia a lista de balas e projeteis.
+        aliens.empty()
+        bullets.empty()
+
+        # Cria uma nova frota e centraliza a nave.
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+
+        # Oculta o cursor do mouse.
+        pygame.mouse.set_visible(False)
+
+def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
     """Atualiza as imagens na tela e alterna para a nova tela."""
     # Redesenha a tela a cada passagem de laço.
     screen.fill(ai_settings.bg_color)
