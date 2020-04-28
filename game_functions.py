@@ -101,6 +101,9 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
 
+        # Reinicia as configuraçõs do jogo.
+        ai_settings.initialize_dynamic_settings()
+
         # Oculta o cursor do mouse.
         pygame.mouse.set_visible(False)
 
@@ -124,12 +127,16 @@ def update_bullets(ai_settings, screen, ship, bullets, aliens):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+
+    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
     
-    # Verifica se algum projétil atingiu os aliens e apaga o projetil e o alien.
+def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
+    """Verifica se algum projétil atingiu os aliens e apaga o projetil e o alien."""
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
     if len(aliens) == 0:
         bullets.empty()
+        ai_settings.increase_speed()
         create_fleet(ai_settings,screen, ship, aliens)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
