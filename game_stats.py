@@ -7,6 +7,9 @@ class GameStats():
         self.reset_stats()
         self.game_active = True
 
+        # Informa a pontuação máxima (essa pontuação não é zerada apos fechar o jogo).
+        self.high_score = 0
+
         # Inicia o jogo em um estado inativo.
         self.game_active = False
 

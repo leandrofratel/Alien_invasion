@@ -5,6 +5,7 @@ from ship import Ship
 from pygame.sprite import Group
 from game_stats import GameStats
 from button import Button
+from scoreboard import Scoreboard
 
 def run_game():
     # Inicia o jogo e cria um objeto na tela.
@@ -26,10 +27,11 @@ def run_game():
     gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # Define a cor de fundo.
-    bg_color = (230, 230, 230)
+    bg_color = (235, 235, 235)
 
-    # Cria um objeto para armazenar os dados estatísticos.
+    # Cria um objeto para armazenar os dados estatísticos do jogo e o painel de pontuação.
     stats = GameStats(ai_settings)
+    sb = Scoreboard(ai_settings, screen, stats)
 
     # Cria o botão Play.
     play_button = Button(ai_settings, screen, "Iniciar")
@@ -40,14 +42,8 @@ def run_game():
         gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, bullets, aliens)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
-            gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
-        
-        if not stats.game_active:
-            play_button.draw_button()
-        
-        # Deixa a tela mais recente visível.
-        pygame.display.flip()
+            gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
  
 run_game()
