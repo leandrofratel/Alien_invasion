@@ -10,14 +10,17 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # Responde da mesma forma quando a nave é atingida.
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets)
             break
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Responde quando a nave é atingida."""
     if stats.ships_left > 0:
         # Decrementa ships_left.
         stats.ships_left -= 1
+
+        # Atualiza o painel de pontuações.
+        sb.prep_ships()
 
         # Esvazia a lista de aliens e balas.
         aliens.empty()
@@ -68,7 +71,7 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
+def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     """Responde a eventos de pressionamento de teclas e de mouse."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,10 +85,9 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship,
-                aliens, bullets, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """O jogo é iniciado quando o jogado clicar no botão."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
@@ -93,7 +95,13 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         stats.reset_stats()
         stats.game_active = True
 
-        # Esvazia a lista de balas e projeteis.
+        # Reinicia os dados estatísticos do jogo.
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
+        sb.prep_ships()
+
+        # Esvazia a lista de balas e projéteis.
         aliens.empty()
         bullets.empty()
 
@@ -152,8 +160,14 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, 
     check_high_score(stats, sb)
 
     if len(aliens) == 0:
+        # Sea frota toda for destruida, inicia um novo nível.
         bullets.empty()
         ai_settings.increase_speed()
+
+        # Aumenta o nível.
+        stats.level += 1
+        sb.prep_level()
+
         create_fleet(ai_settings,screen, ship, aliens)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -198,7 +212,7 @@ def create_fleet(ai_settings, screen, ship, aliens):
         for alien_number in range(number_aliens_x):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Verifica se a frota está em uma das bordas e 
     então atualiza as posições de todos os aliens da frota"""
     check_fleet_edges(ai_settings, aliens)
@@ -206,10 +220,10 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
 
     # Indica se houve colisão entre um alien e a nave.
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, screen, stats, sb, aliens, bullets)
 
     # Verifica se um alien chegou até o fim da dela.
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
 def check_high_score(stats, sb):
     """Verifica sse há uma nova pontuação máxima."""
