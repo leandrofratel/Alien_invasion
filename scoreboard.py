@@ -1,5 +1,5 @@
 import pygame.font
-from pygame.sprite import Sprite
+from pygame.sprite import Group
 from ship import Ship
 
 class Scoreboard():
@@ -13,10 +13,13 @@ class Scoreboard():
         self.stats = stats
 
         # Configurações de fonte para as informações de pontuação.
-        self.text_color = (0, 255, 0)
+        self.text_color = (30, 30, 30)
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepara as imagens das pontuações iniciais.
+        self.prep_images()
+
+    def prep_images(self):
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
@@ -24,19 +27,19 @@ class Scoreboard():
 
     def prep_score(self):
         """Transforma a pontuação em uma imagem renderizada."""
-        round_score = int(round(self.stats.score, -1))
-        score_str = "{:,}". format(round_score)
+        score_str = str(self.stats.score)
         self.score_image = self.font.render(score_str, True, self.text_color, self.ai_settings.bg_color)
-        
+
         # Exibe a pontuação na parte superior direita da tela.
         self.score_rect = self.score_image.get_rect()
-        self.score_rect.right = self.screen_rect.right - 20
+        self.score_rect_right = self.screen_rect.right - 20
         self.score_rect.top = 20
 
     def prep_high_score(self):
         """Renderiza a pontuação máxima."""
-        high_score = int(round(self.stats.high_score, -1))
-        high_score_str = "{:,}".format(high_score)
+        #high_score = int(round(self.stats.high_score, -1))
+        #high_score_str = "{:,}".format(high_score)
+        high_score_str = str(self.stats.high_score)
         self.high_score_image = self.font.render(high_score_str, True,
             self.text_color, self.ai_settings.bg_color)
 
@@ -55,7 +58,7 @@ class Scoreboard():
         self.level_rect.top = self.score_rect.bottom + 10
 
     def prep_ships(self):
-        """Mostra quantas espaçonaves restam."""
+        '''Mostra quantas espaçonaves restam'''
         self.ships = Group()
         for ship_number in range(self.stats.ships_left):
             ship = Ship(self.ai_settings, self.screen)

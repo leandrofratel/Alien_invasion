@@ -7,12 +7,12 @@ class Settings():
         """Configurações e opções de tamanho de tela, basta remover o "#" do...
         conjunto de tamanho que deseja utilizar e adiocionar no conjunto em...
         que não está sendo utilizado."""
-
-        self.screen_width = 900
-        self.screen_hight = 600
+        # Configurações da tela.
+        self.screen_width = 800
+        self.screen_hight = 500
        
         # Configurações de cor da tela
-        self.bg_color = (25, 25, 55)
+        self.bg_color = (230, 230, 230)
 
         # Configurações da espaçonave.
         self.ship_limit = 3
@@ -23,7 +23,7 @@ class Settings():
         # Configurações dos projéteis.
         self.bullet_widht = 3
         self.bullet_hight = 15
-        self.bullet_color = 255, 102, 152
+        self.bullet_color = (60, 60, 60)
         self.bullet_allowed = 3
 
         # Taxa com que a velocidade aumenta.
@@ -52,5 +52,4 @@ class Settings():
         self.ship_speed_factor *= self.speedup_scale
         self.bullet_speed_factor *= self.speedup_scale
         self.alien_speed_factor *= self.speedup_scale
-
         self.alien_points = int(self.alien_points * self.score_scale)

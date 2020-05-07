@@ -10,7 +10,7 @@ class Ship(Sprite):
         self.ai_settings = ai_settings
 
         # Carrega a imagem da espaçonave e obtém seu rect.
-        self.image = pygame.image.load('images/ship_48x53.bmp').convert_alpha()
+        self.image = pygame.image.load('images/ship_48x53.bmp')#.convert_alpha()
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 

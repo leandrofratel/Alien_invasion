@@ -19,15 +19,12 @@ def run_game():
     pygame.mixer.music.play()
 
     # Cria uma nave, um grupo de projéteis e um grupo de alienígenas.
-    aliens = Group()
     ship = Ship(ai_settings, screen)
     bullets = Group()
+    aliens = Group()
 
     # Cria uma frota de alienígenas.
     gf.create_fleet(ai_settings, screen, ship, aliens)
-
-    # Define a cor de fundo.
-    bg_color = (235, 235, 235)
 
     # Cria um objeto para armazenar os dados estatísticos do jogo e o painel de pontuação.
     stats = GameStats(ai_settings)
@@ -44,6 +41,6 @@ def run_game():
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
-            gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
  
 run_game()
