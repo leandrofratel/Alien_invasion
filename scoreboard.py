@@ -1,5 +1,6 @@
 import pygame.font
 from pygame.sprite import Group
+
 from ship import Ship
 
 class Scoreboard():
@@ -17,9 +18,6 @@ class Scoreboard():
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepara as imagens das pontuações iniciais.
-        self.prep_images()
-
-    def prep_images(self):
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
@@ -27,8 +25,10 @@ class Scoreboard():
 
     def prep_score(self):
         """Transforma a pontuação em uma imagem renderizada."""
-        score_str = str(self.stats.score)
-        self.score_image = self.font.render(score_str, True, self.text_color, self.ai_settings.bg_color)
+        rounded_score = int(round(self.stats.score, -1))
+        score_str = "{:,}".format(rounded_score)
+        self.score_image = self.font.render(score_str, True, self.text_color, 
+            self.ai_settings.bg_color)
 
         # Exibe a pontuação na parte superior direita da tela.
         self.score_rect = self.score_image.get_rect()
@@ -37,9 +37,8 @@ class Scoreboard():
 
     def prep_high_score(self):
         """Renderiza a pontuação máxima."""
-        #high_score = int(round(self.stats.high_score, -1))
-        #high_score_str = "{:,}".format(high_score)
-        high_score_str = str(self.stats.high_score)
+        high_score = int(round(self.stats.high_score, -1))
+        high_score_str = "{:,}".format(high_score)
         self.high_score_image = self.font.render(high_score_str, True,
             self.text_color, self.ai_settings.bg_color)
 
@@ -50,7 +49,8 @@ class Scoreboard():
 
     def prep_level(self):
         """Transforma o nível em uma imagem rederizada."""
-        self.level_image = self.font.render(str(self.stats.level), True, self.text_color, self.ai_settings.bg_color)
+        self.level_image = self.font.render(str(self.stats.level), True, 
+                self.text_color, self.ai_settings.bg_color)
 
         # Posiciona o nível abaixo da pontuação.
         self.level_rect = self.level_image.get_rect()
