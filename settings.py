@@ -8,8 +8,8 @@ class Settings():
         conjunto de tamanho que deseja utilizar e adiocionar no conjunto em...
         que não está sendo utilizado."""
         # Configurações da tela.
-        self.screen_width = 800
-        self.screen_hight = 500
+        self.screen_width = 1000
+        self.screen_hight = 800
        
         # Configurações de cor da tela
         self.bg_color = (230, 230, 230)
@@ -18,7 +18,7 @@ class Settings():
         self.ship_limit = 3
 
         # Configurações dos alienígenas.
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 2
 
         # Configurações dos projéteis.
         self.bullet_widht = 3
@@ -27,9 +27,9 @@ class Settings():
         self.bullet_allowed = 3
 
         # Taxa com que a velocidade aumenta.
-        self.speedup_scale = 1.1
+        self.speedup_scale = 0.2
 
-        # Taxa com que os ponstos para cada alienígena aumentam.
+        # Taxa com que os pontos para cada alienígena aumentam.
         self.score_scale = 1.5
 
         self.initialize_dynamic_settings()
