@@ -36,7 +36,6 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
     # Faz uma leve pausa.
     sleep(0.5)
 
-
 def check_fleet_edges(ai_settings, aliens):
     """Responde se um alien alcançou a borda da tela."""
     for alien in aliens.sprites():
@@ -179,7 +178,7 @@ def fire_bullet(ai_settings, screen, ship, bullets):
 
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determina o número de linhas com alienígenas que cabem na tela."""
-    available_space_y = (ai_settings.screen_hight - 
+    available_space_y = (ai_settings.screen_height - 
                         (3 * alien_height) - ship_height)
     number_rows = int(available_space_y / (2 * alien_height))
     return number_rows
@@ -202,7 +201,7 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
 def create_fleet(ai_settings, screen, ship, aliens):
     """Cria uma frota completa de alienígenas."""
     # Cria um alienígina e calcula o número de alienígenas em uma linha.
-    # O espaçamento entre os alienígenas é igaul à largura de um alienígena.
+    # O espaçamento entre os alienígenas é igual à largura de um alienígena.
     alien = Alien(ai_settings, screen)
     number_aliens_x = get_number_alien_x(ai_settings, alien.rect.width)
     number_rows = get_number_rows(ai_settings, ship.rect.height, alien.rect.height)

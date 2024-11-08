@@ -10,7 +10,7 @@ class Bullet(Sprite):
         self.screen  = screen
 
         # Cria um retângulo para o projétil em (0, 0) e, em seguida, define a posição.
-        self.rect = pygame.Rect(0, 0, ai_settings.bullet_widht, ai_settings.bullet_hight)
+        self.rect = pygame.Rect(0, 0, ai_settings.bullet_width, ai_settings.bullet_height)
         self.rect.centerx = ship.rect.centerx
         self.rect.top = ship.rect.top
 
@@ -22,11 +22,11 @@ class Bullet(Sprite):
 
     def update(self):
         """Move o prejétil para cima na tela."""
-        # Atualizaa posição decimal do projétil.
+        # Atualiza posição decimal do projétil.
         self.y -= self.speed_factor
         # Atualiza a posição do rect.
         self.rect.y = self.y
 
     def draw_bullet(self):
-        """Desnha o projétil na tela."""
+        """Desenha o projétil na tela."""
         pygame.draw.rect(self.screen, self.color, self.rect)
