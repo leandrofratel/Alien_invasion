@@ -5,7 +5,6 @@ class GameStats():
         """Inicializa os dados estatísticos."""
         self.ai_settings = ai_settings
         self.reset_stats()
-        self.game_active = True
 
         # Informa a pontuação máxima (essa pontuação não é zerada apos fechar o jogo).
         self.high_score = 0

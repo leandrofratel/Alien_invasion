@@ -10,13 +10,14 @@ from scoreboard import Scoreboard
 def run_game():
     # Inicia o jogo e cria um objeto na tela.
     pygame.init()
+    pygame.mixer.init() # => Inicializa o mixer para o áudio.
     ai_settings = Settings() 
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption("Alien Invasion - Star Wars")
 
     # Musica.
     pygame.mixer.music.load('songs/star_wars_theme.mp3')
-    pygame.mixer.music.play()
+    pygame.mixer.music.play(-1) # "-1" para tocar em loop
 
     # Cria uma nave, um grupo de projéteis e um grupo de alienígenas.
     ship = Ship(ai_settings, screen)

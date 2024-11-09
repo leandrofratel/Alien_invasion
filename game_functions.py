@@ -230,7 +230,12 @@ def check_high_score(stats, sb):
         stats.high_score = stats.score
         sb.prep_high_score()
 
+def write_high_score(self):
+    """Salva a pontuação máxima no arquivo de dados."""
+    with open('high_score.txt', 'w') as file:
+        file.write(str(self.high_score))
+
 def exit_game(stats):
     """Encerra o jogo."""
-    stats.write_hirg_score()
+    stats.write_high_score()
     sys.exit()
